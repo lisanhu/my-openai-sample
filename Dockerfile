@@ -7,7 +7,6 @@ ENV PYTHONUNBUFFERED True
 
 # Copy local code to the container image.
 ENV APP_HOME /openai-quickstart-python
-ENV OPENAI_API_KEY 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
 WORKDIR $APP_HOME
 COPY . ./
 
