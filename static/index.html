@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Example</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+    <div style="text-align: center;">
+        This is a simple chatbot example. It uses OpenAI's GPT-3.5 API to generate responses.
+        <br/>
+        The whole website (front-end, back-end, stylesheet) are all generated using GPT-4.
+    </div>
+    <div class="container">
+        <div class="left">
+            <textarea id="systemMessage" rows="10" cols="30" placeholder="在此输入系统消息。系统消息是指不给用户看到的消息，通常是作为这个AI功能的背景说明，比如说你是一个友好的助手，比如说你是一个NPC等"></textarea>
+        </div>
+        <div class="right">
+            <div id="chatContainer">
+
+            </div>
+            <textarea id="userInput" rows="10" cols="30" placeholder="从这里开始和AI对话，在这里输入你想对它说的话，之后点击Submit。如果很久没有反应可能需要再输入一遍，最近OpenAI太火爆了，容易服务卡顿。如果跟它说太多的东西也可能会无法回复，它的回复长度有限制，从打开这个网页开始的系统消息，用户和AI的对话都算作内容长度"></textarea>
+            <button id="userSubmit">Submit</button>
+        </div>
+    </div>
+    <script src="/static/scripts.js"></script>
+</body>
+
+</html>

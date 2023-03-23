@@ -1,40 +1,36 @@
 import os
-
+from flask import Flask, request, jsonify, send_from_directory
 import openai
-from flask import Flask, redirect, render_template, request, url_for
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
-openai.api_key = os.getenv("OPENAI_API_KEY")
 
+# Get the OpenAI API key from the environment variable
+openai.api_key = os.environ["OPENAI_API_KEY"]
 
-@app.route("/", methods=("GET", "POST"))
-def index():
-    result = request.args.get("result")
-    return render_template("index.html", result=result)
+# Serve index.html file from the root
+@app.route("/")
+def serve_index():
+    return send_from_directory("static", "index.html")
 
+@app.route("/get-response", methods=["POST"])
+def generate_response():
+    data = request.json
+    system_message = data.get("systemMessage", "")
+    conversation = data.get("conversation", [])
 
-@app.route("/qa", methods=(["POST"]))
-def qa():
-    if request.method == "POST":
-        question = request.form["question"]
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": "Answer the Question respectfully. Reply unknown if you don't know."},
-                {"role": "user", "content": question},
-            ],
-            temperature=0.6,
-        )
-        return redirect(url_for("index", result=response.choices[0].message.content))
+    messages = [{"role": "system", "content": system_message}] + conversation
 
-    result = request.args.get("result")
-    return render_template("index.html", result=result)
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=messages,
+    )
 
+    message = response.choices[0].message.content.strip()
+    return jsonify({"botResponse": message})
 
-# def generate_prompt(question):
-#     return """Answer the Question respectfully. Reply unknown if you don't know.
-
-# Question: {},
-# Answer:""".format(
-#         question
-#     )
+if __name__ == "__main__":
+    app.run(port=8080, debug=True)
