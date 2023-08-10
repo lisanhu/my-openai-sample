@@ -25,7 +25,7 @@ def generate_response():
     messages = [{"role": "system", "content": system_message}] + conversation
 
     response = openai.ChatCompletion.create(
-        model="gpt-4",
+        model="gpt-4-0314",
         messages=messages,
     )
 
