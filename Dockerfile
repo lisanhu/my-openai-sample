@@ -7,6 +7,7 @@ ENV PYTHONUNBUFFERED True
 
 # Copy local code to the container image.
 ENV APP_HOME /openai-quickstart-python
+ENV TIMEOUT 120
 WORKDIR $APP_HOME
 COPY . ./
 
